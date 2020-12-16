@@ -1,0 +1,29 @@
+Package: hafrostox
+Title: Utils for Rstox-surveyPlanner with some gpx and sf I/O.
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Sigurdur Thor",
+           family = "Jonsson",
+           role = c("aut", "cre"),
+           email = "sigurdur@hafro.is",
+           comment = c(ORCID = "0000-0001-5550-0326")),
+      person(given="Birkir",family="Bardarson",role="ctb"))
+Author: Sigurdur Thor Jonsson [aut, cre],
+  Birkir Bardarson [ctb]
+Maintainer: Sigurdur Thor Jonsson <sigurdur@hafro.is>
+Depends: R (>= 4.0)
+Imports: Rstox, tidyverse, sf, plotKML, XML
+Description: Utilities facilitating reading and writing gpx and wkt 
+  stratum boundaries for use in conjunction with the RStox surveyPlanner 
+  function to begin with. Old function extracting strata from a Stox
+  project xml-file and gpx-route and waypoint writing
+  utils included.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

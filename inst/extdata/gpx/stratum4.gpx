@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" xmlns:opencpn="http://www.opencpn.org">
+  <rte>
+    <name>stratum4</name>
+    <extensions>
+      <opencpn:guid>27ff1a58-eac7-4704-b421-c6b76aec77ef</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:planned_speed>6.00</opencpn:planned_speed>
+      <opencpn:planned_departure>2020-12-08T14:02:19Z</opencpn:planned_departure>
+      <opencpn:time_display>PC</opencpn:time_display>
+      <gpxx:RouteExtension>
+        <gpxx:IsAutoNamed>false</gpxx:IsAutoNamed>
+      </gpxx:RouteExtension>
+    </extensions>
+    <rtept lat="68.654274135" lon="-17.349712624">
+      <time>2020-12-08T14:06:41Z</time>
+      <name>003</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>2f38f82f-b18e-419b-9207-0f22065e1f86</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="67.002174582" lon="-17.293381562">
+      <time>2020-12-08T14:06:45Z</time>
+      <name>004</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>279e8cd6-c802-434d-88f3-24f03e491944</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.913981755" lon="-13.068551899">
+      <time>2020-12-08T14:07:51Z</time>
+      <name>003</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>09c5ab40-23e6-49fb-8e8d-3e941714d6b1</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="67.117444184" lon="-13.026303603">
+      <time>2020-12-08T14:07:53Z</time>
+      <name>004</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>7a8c542f-6a16-48a4-b219-ca437aebe25a</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="67.411345816" lon="-13.561448693">
+      <time>2020-12-08T14:07:54Z</time>
+      <name>005</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>6d6a791d-7293-4361-81fe-ba1e5fdc3627</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="68.067483233" lon="-15.997767132">
+      <time>2020-12-08T14:07:57Z</time>
+      <name>006</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>7cf18833-2bf3-414a-89ed-c7c27e58d6aa</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+  </rte>
+</gpx>

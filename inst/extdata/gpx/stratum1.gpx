@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" xmlns:opencpn="http://www.opencpn.org">
+  <rte>
+    <name>stratum1</name>
+    <extensions>
+      <opencpn:guid>27ff1a58-eac7-4704-b421-c6b76aec77ef</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:planned_speed>6.00</opencpn:planned_speed>
+      <opencpn:planned_departure>2020-12-08T14:02:19Z</opencpn:planned_departure>
+      <opencpn:time_display>PC</opencpn:time_display>
+      <gpxx:RouteExtension>
+        <gpxx:IsAutoNamed>false</gpxx:IsAutoNamed>
+      </gpxx:RouteExtension>
+    </extensions>
+    <rtept lat="65.563856868" lon="-26.855579363">
+      <time>2020-12-08T14:01:21Z</time>
+      <name>001</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>5f0a4c84-4525-4387-9a92-f5dd7d84cba2</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="65.962742402" lon="-26.968241488">
+      <time>2020-12-08T14:01:24Z</time>
+      <name>002</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>655f5b39-14bc-4a8b-abb6-201c3db0d54b</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.281965232" lon="-26.250020445">
+      <time>2020-12-08T14:01:26Z</time>
+      <name>003</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>73c65181-6a5e-41ec-929b-5a933ddaac98</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.552401596" lon="-25.743040886">
+      <time>2020-12-08T14:01:28Z</time>
+      <name>004</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>1085772a-fad2-450d-9b6a-dff13940adaf</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.808837546" lon="-25.658544293">
+      <time>2020-12-08T14:01:31Z</time>
+      <name>005</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>464e1e3a-d4e1-48c4-aadb-f76630ca0883</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="67.486956746" lon="-25.419137278">
+      <time>2020-12-08T14:01:34Z</time>
+      <name>006</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>27f7d2d6-62be-4032-8d93-c0f563db06ea</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="67.733706445" lon="-24.700916236">
+      <time>2020-12-08T14:01:36Z</time>
+      <name>007</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>05a7e086-b8e2-48ba-b805-c72c2be7611b</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="68.109525788" lon="-22.926487778">
+      <time>2020-12-08T14:01:40Z</time>
+      <name>008</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>42eb14c5-1de0-41af-942d-0c73663c035a</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.980156289" lon="-22.926487778">
+      <time>2020-12-08T14:01:48Z</time>
+      <name>009</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>1b5305d8-1eb5-47e5-8906-8c1028863cbd</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.925023319" lon="-23.574294993">
+      <time>2020-12-08T14:01:50Z</time>
+      <name>010</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>50c314c9-632a-44dc-bec6-27410419169b</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.781092904" lon="-24.123522849">
+      <time>2020-12-08T14:01:52Z</time>
+      <name>011</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>1d656b54-04c5-4338-aa0a-9de431e58fb9</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.591596381" lon="-24.785412829">
+      <time>2020-12-08T14:01:56Z</time>
+      <name>012</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>6198e5ee-a81f-4a4b-a510-f4554ea7d92e</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="66.174107580" lon="-25.686709824">
+      <time>2020-12-08T14:02:01Z</time>
+      <name>013</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>01b5610c-5857-40e7-969a-801f11077f45</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+    <rtept lat="65.749614405" lon="-26.081027259">
+      <time>2020-12-08T14:02:06Z</time>
+      <name>014</name>
+      <sym>diamond</sym>
+      <type>WPT</type>
+      <extensions>
+        <opencpn:guid>72fc0420-255a-4fe3-bc4d-e92d67c50f3e</opencpn:guid>
+        <opencpn:auto_name>1</opencpn:auto_name>
+        <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+        <opencpn:waypoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" />
+        <opencpn:scale_min_max UseScale="false" ScaleMin="2147483646" ScaleMax="0" />
+      </extensions>
+    </rtept>
+  </rte>
+</gpx>
