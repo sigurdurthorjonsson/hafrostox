@@ -1,5 +1,6 @@
 ---
 title: "Create transects for strata defined by gpx-boundaries"
+author: "Sigurður Þór Jónsson"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Create transects for strata defined by gpx-boundaries}
@@ -10,11 +11,110 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo=TRUE,
+  message=FALSE,
+  warning=FALSE,
+  error=FALSE
 )
 ```
 
+An R-package, `hafrostox`, has been setup in preparation of possible increased Hafró use of the IMR open source program StoX, used for survey index estimation and documentaion of the estimation process. StoX has a module called `Rstox`, which is an R package containing much of the StoX functionality. Of note is the function `Rstox::surveyPlanner`, which makes setting up a survey in a given set of strata, subject to a set of constraints, relatively straight forward. I started out with setting up utilities enabling us to tap into the `surveyPlanner` without working from within StoX-projects. It should be noted that at the wrap-up sessions of the Norwegian REDUS project the StoX-team announced that StoX 3.0 is to be released soon, apparently as an R-framework. 
 ```{r setup}
 library(hafrostox)
 ```
-# 
+
+# Define strata from gpx
+
+For rapid design of an acoustic survey when allocated vessel time with short notice it would be natural for us at Hafró to set up the boundaries of the intended survey area based on history and recent experience, and, in some cases recent survey coverage. For our survey work we often use the open soure program `OpenCPN` ([](https://opencpn.org)). In `hafrostox` we read in a directory of gpx-files containing routes giving the (open) boundary of a few strata, taking care to make adjoining boundaries coinciding. Here we take as an example 4 strata loosely based on an industry collaborative survey undertaken on 4 commercial vessels in December 2020, the coverage of each vessel given the status of stratum.
+```{r}
+st <- gpx2sf(paste(system.file("extdata",package="hafrostox"),"gpx",sep="/"))
+plot(st,axes=TRUE)
+fn <- tempfile()
+sf2wkt(st,fn)
+```
+
+# Parallel design
+
+Once the gpx-s have been read in, converted to an sf-dataframe, and written out as Well Known Text, `Rstox::SsurveyPlanner` can read in the strata and set out transects covering the intended area. A range of settings are available, see `?Rstox::surveyPlanner` and further experimentation could give better understanding of the possibliies.
+
+We can lay out 'parallel' transects covering the strata, the general survey direction towards east, with approximate survey effort 1000 nmi per strata, with survey speed of 10 knots, but allocated in proportion to stratum area.
+```{r,fig.width=8}
+prl1 <- surveyPlanner(project=fn,type="Parallel",bearing="E",
+  nmi=1000,knots=10,seed=0,equalEffort=TRUE)
+p_prl1 <- plotStratum(prl1)
+```
+
+or we can adapt the layout to different directions in each area, as was the case when the desember survey was realized.
+```{r,fig.width=8}
+prl2 <- surveyPlanner(project=fn,type="Parallel",
+  bearing=c("NE","W","N","E"),nmi=1000,knots=10,seed=1,equalEffort=TRUE)
+p_prl2 <- plotStratum(prl2)
+```
+
+# Zigzag layout
+
+It is often pointed out that a parallel design costs more relative to a zigzag design although there are pros and cons for both approaches. `Rstox::surveyPlanner` includes variants of zigzag designs, here we give an example of type 'Harbitz's Rectangular Enclosure ZigZag', with simlar settings as above.
+```{r,fig.width=8}
+zz1 <- surveyPlanner(project=fn,type="RectEnclZZ",
+  bearing=c("NE","W","N","E"),nmi=1000,knots=10,seed=1,equalEffort=TRUE)
+p_zz1 <- plotStratum(zz1)
+```
+
+Hafró has often emphasized the importance of repeat coverages, `Rstox::surveyPlanner` has an option to add a return trip to the plan from the very beginning, shown as a dashed line on the plot.
+```{r,fig.width=8}
+zz2 <- surveyPlanner(project=fn,type="RectEnclZZ",
+  bearing=c("NE","W","N","E"),nmi=1000,knots=10,seed=1,
+  equalEffort=TRUE,retour=TRUE)
+p_zz2 <- plotStratum(zz2)
+
+```
+
+# Book-keeping different designs
+
+The objects returned by `surveyPlanner` are list with components: ``r paste(names(prl1),collapse=", ")``. The `Survey` gives a summary of the total including a breakdown of effort allocated on transects and transport legs betweern transects or what sometimes has been referred to as 'transverse transects` or `intersections` at Hafró. For the second parallel design:
+
+```{r}
+prl1$Survey
+```
+
+and a breakdown of distance by strata:
+
+```{r}
+prl2$Transect %>%
+  group_by(stratum) %>%
+  summarize(dist=sum(segmentLengths,na.rm=TRUE)) %>%
+  knitr::kable(digits=0)
+```
+
+Here are summaries of the two zigzag layouts:
+
+```{r}
+zz1$Survey
+zz2$Survey
+```
+
+and a breakdown of the zigzag-s, first the one pass survey:
+
+```{r}
+zz1$Transect %>%
+  group_by(stratum) %>%
+  summarize(dist=sum(segmentLengths,na.rm=T)) %>%
+  knitr::kable()
+```
+
+and finally the 'tour-retour' layout:
+
+```{r}
+zz2$Transect %>%
+  group_by(stratum,retour) %>%
+  summarize(dist=sum(segmentLengths,na.rm=TRUE)) %>%
+  knitr::kable(digits=0)
+```
+
+# Write transects 
+
+The `Rstox` package has utilitie for outputting transects in various formats, one of those is `Rstox::writeTransectGPX`. The output is a gpx-file of waypoints, but it would be more natural to work further with gpx-files of routes. 
+
+__todo__
+For that purpose we intend to wrap around `hafrostox::gpx_rte`, to be completed.
