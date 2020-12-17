@@ -15,6 +15,9 @@ gpx_wpt(file, lat, lon, name, symbol)
 
 \item{symbol}{Symbols e.g. from OpenCPN vocabulary (could be worked in).}
 }
+\value{
+Writes a gpx-file of waypoints.
+}
 \description{
 Writes a gpx-file of waypoints with symbols from OpenCPN vocabulary.
 }
@@ -25,12 +28,10 @@ Writes a gpx-file of waypoints with symbols from OpenCPN vocabulary.
    "Symbol-Glow-Small-Orange")
   } 
 }
-\keyword{Writes}
-\keyword{a}
+\author{
+Birkir Bardarson
+}
 \keyword{gpx,}
-\keyword{gpx-file}
 \keyword{lat,}
 \keyword{lon,}
-\keyword{of}
 \keyword{waypoint}
-\keyword{waypoints.}

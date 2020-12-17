@@ -9,9 +9,12 @@
 #' @return A text file representation of the geometries
 #' @export
 #' @examples
-#' strata <- gpx2sf(paste(system.file(
-#'   c("extdata","gpx"),package="hafrostox"),"gpx",sep="/"))
-#' sf2wkt(strata,"strata_wkt.txt")  
+#' \dontrun{
+#' strata <- gpx2sf(
+#'   paste(system.file("extdata", package="hafrostox"), "gpx", sep="/"))
+#' sf2wkt(strata, "strata_wkt.txt")
+#' }
 
-sf2wkt <- function(sfdf, fn = "tmp_wkt.txt")
-  write(paste(sfdf$ID,st_as_text(sfdf$geom),sep="\t"),ncol=1,file=fn)
+sf2wkt <- function(sfdf, fn="tmp_wkt.txt")
+  write(paste(sfdf$ID, sf::st_as_text(sfdf$geom),
+    sep="\t"), ncolumns=1, file=fn)

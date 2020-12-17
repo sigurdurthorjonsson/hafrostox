@@ -10,21 +10,20 @@
 #' @return An sf-dataframe.
 #' @export
 #' @examples
-#' \dontrun{
-#' 
-#' 
-#' }
+#' strata <- gpx2sf(
+#'   paste(system.file("extdata",package="hafrostox"),"gpx",sep="/"))
+#' strata
 
 gpx2sf <- function(gpx_strata_dir) {
   list.files(gpx_strata_dir,pattern="gpx",full.names=TRUE) %>%
-    map(readGPX) %>%
-    map(~.x$routes[[1]]) %>%
-    lapply(., function(x) st_multipolygon(
-      list(list(as.matrix(bind_rows(
+    purrr::map(plotKML::readGPX) %>%
+    purrr::map(~.x$routes[[1]]) %>%
+    purrr::map(function(x) sf::st_multipolygon(
+      list(list(as.matrix(dplyr::bind_rows(
         x[,c("lon","lat")],x[1,c("lon","lat")])))))) %>%
-    st_as_sfc() %>%
-    st_sf(ID = 1:length(.), crs = 4326) %>%
-    rename(geom = ".")
+    sf::st_as_sfc() %>%
+    sf::st_sf(ID = 1:length("."), crs = 4326) %>%
+    dplyr::rename(geom = ".")
 
 }
 

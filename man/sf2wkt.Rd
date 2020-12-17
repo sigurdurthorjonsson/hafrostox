@@ -2,7 +2,8 @@
 % Please edit documentation in R/sf2wkt.R
 \name{sf2wkt}
 \alias{sf2wkt}
-\title{Writes the simple feature geometries out to well know text files.}
+\title{Writes e.g. stratum boundaries as simple feature geometries
+out to well know text files.}
 \usage{
 sf2wkt(sfdf, fn = "tmp_wkt.txt")
 }
@@ -19,9 +20,11 @@ Takes a sf-data.frame and writes out a text representation
 of the geometries.
 }
 \examples{
-strata <- gpx2sf(paste(system.file(
-  c("extdata","gpx"),package="hafrostox"),"gpx",sep="/"))
-sf2wkt(strata,"strata_wkt.txt")  
+\dontrun{
+strata <- gpx2sf(
+  paste(system.file("extdata", package="hafrostox"), "gpx", sep="/"))
+sf2wkt(strata, "strata_wkt.txt")
+}
 }
 \keyword{known}
 \keyword{sf-data.frame,}

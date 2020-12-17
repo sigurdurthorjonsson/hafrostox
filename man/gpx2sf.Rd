@@ -22,10 +22,9 @@ is supplied, the function reads in the GPXs, closes the boundaries and
 converts to 'simple features'.
 }
 \examples{
-\dontrun{
-
-
-}
+strata <- gpx2sf(
+  paste(system.file("extdata",package="hafrostox"),"gpx",sep="/"))
+strata
 }
 \keyword{StoX}
 \keyword{XML,}
