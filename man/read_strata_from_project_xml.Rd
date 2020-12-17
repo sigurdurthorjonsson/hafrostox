@@ -19,8 +19,10 @@ With some XML-magic from Arne Johannes Holmin we get at a StoX-project's
 strata boundaries and read them in as an sf-data.frame.
 }
 \examples{
+\dontrun{
 read_strata_from_project_xml(
   "~/workspace/stox/project/Test_Rstox/process/project.xml"  
+}
 }
 \keyword{StoX}
 \keyword{XML,}

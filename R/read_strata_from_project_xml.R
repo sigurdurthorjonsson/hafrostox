@@ -8,8 +8,10 @@
 #' @return An sf-dataframe.
 #' @export
 #' @examples
+#' \dontrun{
 #' read_strata_from_project_xml(
 #'   "~/workspace/stox/project/Test_Rstox/process/project.xml"  
+#' }
 
 read_strata_from_project_xml <- function(project, names = NULL) {
   XML::xmlParse(project) %>%
