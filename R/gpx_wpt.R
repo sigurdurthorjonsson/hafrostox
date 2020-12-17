@@ -5,7 +5,8 @@
 #' @param name Name of waypoint, e.g 1 thru number of waypoints.
 #' @param symbol Symbols e.g. from OpenCPN vocabulary (could be worked in).
 #' @keywords gpx, lat, lon, waypoint
-#' @keywords Writes a gpx-file of waypoints.
+#' @value Writes a gpx-file of waypoints.
+#' @author Birkir Bardarson
 #' @export
 #' @examples
 #'   \dontrun{gpx_wpt(tibble(

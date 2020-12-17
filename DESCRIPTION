@@ -11,7 +11,7 @@ Authors@R:
 Author: Sigurdur Thor Jonsson [aut, cre],
   Birkir Bardarson [ctb]
 Maintainer: Sigurdur Thor Jonsson <sigurdur@hafro.is>
-Depends: R (>= 4.0)
+Depends: R (>= 3.6)
 Imports: Rstox, tidyverse, sf, plotKML, XML
 Description: Utilities facilitating reading and writing gpx and wkt 
   stratum boundaries for use in conjunction with the RStox surveyPlanner 
