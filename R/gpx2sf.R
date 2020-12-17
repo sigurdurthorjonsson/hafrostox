@@ -22,7 +22,7 @@ gpx2sf <- function(gpx_strata_dir) {
       list(list(as.matrix(dplyr::bind_rows(
         x[,c("lon","lat")],x[1,c("lon","lat")])))))) %>%
     sf::st_as_sfc() %>%
-    sf::st_sf(ID = 1:length("."), crs = 4326) %>%
+    sf::st_sf(ID = 1:length(.), crs = 4326) %>%
     dplyr::rename(geom = ".")
 
 }

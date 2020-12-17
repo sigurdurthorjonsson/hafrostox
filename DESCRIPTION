@@ -1,5 +1,5 @@
 Package: hafrostox
-Title: Utils for Rstox-surveyPlanner with some gpx and sf I/O
+Title: Utils for Rstox-surveyPlanner with some GPX and 'sf' I/O
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Sigurdur Thor",
@@ -21,8 +21,7 @@ Suggests:
 Description: Utilities facilitating reading and writing gpx and wkt 
   stratum boundaries for use in conjunction with the RStox surveyPlanner 
   function to begin with. Old function extracting strata from a Stox
-  project xml-file and gpx-route and waypoint writing
-  utils included.
+  project xml-file and gpx-route and waypoint writing utils included.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

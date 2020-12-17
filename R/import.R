@@ -6,4 +6,3 @@
 #'
 #' @importFrom magrittr %>%
 NULL
-#' @import Rstox, tidyverse

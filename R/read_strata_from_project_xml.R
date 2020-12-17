@@ -25,6 +25,6 @@ read_strata_from_project_xml <- function(project, names = NULL) {
         1:length(.) 
       else 
         names, crs = 4326) %>%
-    rename(geom = ".")
+    dplyr::rename(geom = ".")
 }
     
