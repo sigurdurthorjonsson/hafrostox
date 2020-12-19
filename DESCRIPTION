@@ -14,7 +14,7 @@ Maintainer: Sigurdur Thor Jonsson <sigurdur@hafro.is>
 Depends: R (>= 3.6),
     Rstox,
     tidyverse
-Imports: sf, plotKML, XML, dplyr, purrr, magrittr
+Imports: sf, plotKML, XML, dplyr, purrr, tidyr, magrittr
 Suggests: 
     knitr,
     rmarkdown

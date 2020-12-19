@@ -19,15 +19,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-An R-package, `hafrostox`, has been setup in preparation of possible increased Hafró use of the IMR open source program StoX, used for survey index estimation and documentaion of the estimation process. StoX has a module called `Rstox`, which is an R package containing much of the StoX functionality. Of note is the function `Rstox::surveyPlanner`, which makes setting up a survey in a given set of strata, subject to a set of constraints, relatively straight forward. I started out with setting up utilities enabling us to tap into the `surveyPlanner` without working from within StoX-projects. It should be noted that at the wrap-up sessions of the Norwegian REDUS project the StoX-team announced that StoX 3.0 is to be released soon, apparently as an R-framework. 
+An R-package, `hafrostox`, has been setup in preparation of possible increased Hafró use of the IMR open source program StoX, used for survey index estimation and documentation of the estimation process. StoX has a module called `Rstox`, which is an R package containing much of the StoX functionality. Of note is the function `Rstox::surveyPlanner`, which makes setting up a survey in a given set of strata, subject to a set of constraints, relatively straight forward. I started out with setting up utilities enabling us to tap into the `surveyPlanner` without working from within StoX-projects. It should be noted that at the wrap-up sessions of the Norwegian REDUS project the StoX-team announced that StoX 3.0 is to be released soon, apparently as an R-framework. 
 ```{r setup}
 library(hafrostox)
 ```
 
 # Define strata from gpx
 
-For rapid design of an acoustic survey when allocated vessel time with short notice it would be natural for us at Hafró to set up the boundaries of the intended survey area based on history and recent experience, and, in some cases recent survey coverage. For our survey work we often use the open soure program `OpenCPN` ([](https://opencpn.org)). In `hafrostox` we read in a directory of gpx-files containing routes giving the (open) boundary of a few strata, taking care to make adjoining boundaries coinciding. Here we take as an example 4 strata loosely based on an industry collaborative survey undertaken on 4 commercial vessels in December 2020, the coverage of each vessel given the status of stratum.
-```{r}
+For rapid design of an acoustic survey when allocated vessel time with short notice it would be natural for us at Hafró to set up the boundaries of the intended survey area based on history and recent experience, and, in some cases recent survey coverage. For our survey work we often use the open source program `OpenCPN` ([](https://opencpn.org)). In `hafrostox` we read in a directory of gpx-files containing routes giving the (open) boundary of a few strata, taking care to make adjoining boundaries coinciding. Here we take as an example 4 strata loosely based on an industry collaborative survey undertaken on 4 commercial vessels in December 2020, the coverage of each vessel given the status of stratum.
+```{r,fig.width=8}
 st <- gpx2sf(paste(system.file("extdata",package="hafrostox"),"gpx",sep="/"))
 plot(st,axes=TRUE)
 fn <- tempfile()
@@ -61,7 +61,7 @@ zz1 <- surveyPlanner(project=fn,type="RectEnclZZ",
 p_zz1 <- plotStratum(zz1)
 ```
 
-Hafró has often emphasized the importance of repeat coverages, `Rstox::surveyPlanner` has an option to add a return trip to the plan from the very beginning, shown as a dashed line on the plot.
+Hafró has often emphasized the importance of repeat coverages, `Rstox::surveyPlanner` has an option to add a return trip to the plan from the very beginning. The next figure shows a plan for covering the same area less densly but twice with the same overall effort, the return trip as a dashed line.
 ```{r,fig.width=8}
 zz2 <- surveyPlanner(project=fn,type="RectEnclZZ",
   bearing=c("NE","W","N","E"),nmi=1000,knots=10,seed=1,
@@ -72,7 +72,7 @@ p_zz2 <- plotStratum(zz2)
 
 # Book-keeping different designs
 
-The objects returned by `surveyPlanner` are list with components: ``r paste(names(prl1),collapse=", ")``. The `Survey` gives a summary of the total including a breakdown of effort allocated on transects and transport legs betweern transects or what sometimes has been referred to as 'transverse transects` or `intersections` at Hafró. For the second parallel design:
+The object returned by `surveyPlanner` is list with components: ``r paste(names(prl1),collapse=", ")``. The `Survey` component gives a summary of the total including a breakdown of effort allocated on transects and transport legs betweern transects or what sometimes has been referred to as 'transverse transects` or `intersections` at Hafró. For the second parallel design:
 
 ```{r}
 prl1$Survey
@@ -114,7 +114,14 @@ zz2$Transect %>%
 
 # Write transects 
 
-The `Rstox` package has utilitie for outputting transects in various formats, one of those is `Rstox::writeTransectGPX`. The output is a gpx-file of waypoints, but it would be more natural to work further with gpx-files of routes. 
+The `Rstox` package has utilities for outputting transects in various formats, one of those is `Rstox::writeTransectGPX`. The output is a gpx-file of waypoints, but it would be more natural to work further with gpx-files of routes. For that purpose, `hafrostox::trans2gpx` was put together, wrapping around `hafrostox::gpx_rte`.
+
+```{r}
+## create a temporary location
+dn <- tempdir()
+dn
+trans2gpx(zz2,dn)
+```
 
 __todo__
 For that purpose we intend to wrap around `hafrostox::gpx_rte`, to be completed.
