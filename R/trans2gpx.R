@@ -20,14 +20,9 @@
 trans2gpx <- function(surv,dir_name) {
   trans <- surv$Transect[,c("stratum","lat_start","lon_start","lat_stop","lon_stop")]
   trans <- split.data.frame(trans, trans$stratum)
-  start <- lapply(trans, function(x) {
+  trans <- lapply(trans, function(x) {
     x %>% dplyr::select(lat=lat_start,lon=lon_start)
     })
-  stop <- lapply(trans, function(x) {
-    x %>% dplyr::select(lat=lat_stop,lon=lon_stop) %>%
-      dplyr::filter(dplyr::row_number()==nrow(.))
-    })
-  trans <- purrr::pmap(list(start,stop),dplyr::bind_rows)
 
   for (i in seq(along=trans)) {
     df <- trans[[i]]
