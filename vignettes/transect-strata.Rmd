@@ -26,7 +26,7 @@ library(hafrostox)
 
 # Define strata from gpx
 
-For rapid design of an acoustic survey when allocated vessel time with short notice it would be natural for us at Hafró to set up the boundaries of the intended survey area based on history and recent experience, and, in some cases recent survey coverage. For our survey work we often use the open source program `OpenCPN` ([](https://opencpn.org)). In `hafrostox` we read in a directory of gpx-files containing routes giving the (open) boundary of a few strata, taking care to make adjoining boundaries coinciding. Here we take as an example 4 strata loosely based on an industry collaborative survey undertaken on 4 commercial vessels in December 2020, the coverage of each vessel given the status of stratum.
+For rapid design of an acoustic survey when allocated vessel time with short notice it would be natural for us at Hafró to set up the boundaries of the intended survey area based on history and recent experience, and, in some cases recent survey coverage. For our survey work we often use the open source program [__OpenCPN__](https://opencpn.org). In `hafrostox` we read in a directory of gpx-files containing routes giving the (open) boundary of a few strata, taking care to make adjoining boundaries coinciding. Here we take as an example 4 strata loosely based on an industry collaborative survey undertaken on 4 commercial vessels in December 2020, the coverage of each vessel given the status of stratum.
 ```{r,fig.width=8}
 st <- gpx2sf(paste(system.file("extdata",package="hafrostox"),"gpx",sep="/"))
 plot(st,axes=TRUE)
@@ -122,6 +122,3 @@ dn <- tempdir()
 dn
 trans2gpx(zz2,dn)
 ```
-
-__todo__
-For that purpose we intend to wrap around `hafrostox::gpx_rte`, to be completed.
