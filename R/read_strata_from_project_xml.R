@@ -1,9 +1,9 @@
-#' Reads strata from StoX project files.
+#' Reads strata from StoX project XML file.
 #'
 #' With some XML-magic from Arne Johannes Holmin we get at a StoX-project's
 #' strata boundaries and read them in as an sf-data.frame.
-#' @param project Full path to a StoX project
-#' @param names Optional list of names for the individual strata.
+#' @param project Full path to and filename of a StoX project
+#' @param names Optional list of names for the individual strata
 #' @keywords strata, stratum, XML, StoX project
 #' @return An sf-dataframe.
 #' @export

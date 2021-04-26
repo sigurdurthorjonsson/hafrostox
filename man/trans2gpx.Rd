@@ -7,11 +7,9 @@
 trans2gpx(surv, dir_name)
 }
 \arguments{
-\item{file}{Name of gpx output file}
+\item{surv}{Name of 'surveyPlanner' survey plan output}
 
-\item{lat, lon}{Latitude and longitude of route-points.}
-
-\item{name}{Name of route-point, e.g 1 thru number of rte-points.}
+\item{dir_name}{Name of directory for writing gpx-es to.}
 }
 \value{
 Writes a gpx-file of a single route.

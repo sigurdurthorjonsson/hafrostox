@@ -2,14 +2,14 @@
 % Please edit documentation in R/read_strata_from_project_xml.R
 \name{read_strata_from_project_xml}
 \alias{read_strata_from_project_xml}
-\title{Reads strata from StoX project files.}
+\title{Reads strata from StoX project XML file.}
 \usage{
 read_strata_from_project_xml(project, names = NULL)
 }
 \arguments{
-\item{project}{Full path to a StoX project}
+\item{project}{Full path to and filename of a StoX project}
 
-\item{names}{Optional list of names for the individual strata.}
+\item{names}{Optional list of names for the individual strata}
 }
 \value{
 An sf-dataframe.

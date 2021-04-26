@@ -3,6 +3,7 @@
 export(gpx2sf)
 export(gpx_rte)
 export(gpx_wpt)
+export(read_strata_from_project_json)
 export(read_strata_from_project_xml)
 export(sf2wkt)
 export(trans2gpx)

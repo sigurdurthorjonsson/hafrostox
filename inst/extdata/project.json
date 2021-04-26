@@ -1,0 +1,752 @@
+{
+    "project": {
+        "TimeSaved": "2021-04-26T13:06:35.473Z",
+        "RVersion": "R version 4.0.3 (2020-10-10)",
+        "RstoxPackageVersion": [
+            "RstoxFramework_3.0.0",
+            "RstoxBase_1.3.0",
+            "RstoxData_1.1.0"
+        ],
+        "CertifiedRstoxPackageVersion": [
+            "RstoxFramework_3.0.0",
+            "RstoxBase_1.3.0",
+            "RstoxData_1.1.0"
+        ],
+        "AllCertifiedRstoxPackageVersion": true,
+        "OfficialRstoxFrameworkVersion": true,
+        "DependentPackageVersion": [
+            "data.table_1.14.0",
+            "geojsonsf_2.0.1",
+            "jsonlite_1.7.2",
+            "jsonvalidate_1.1.0",
+            "sp_1.4.5",
+            "sf_0.9.8",
+            "xml2_1.3.2",
+            "stringr_1.4.0",
+            "rgeos_0.5.5",
+            "Rcpp_1.0.6",
+            "geometries_0.2.0",
+            "jsonify_1.2.1",
+            "rapidjsonr_1.2.0",
+            "sfheaders_0.4.0",
+            "V8_3.4.0",
+            "classInt_0.4.3",
+            "DBI_1.1.1",
+            "magrittr_2.0.1",
+            "units_0.7.1",
+            "lattice_0.20.41",
+            "glue_1.4.2",
+            "stringi_1.5.3",
+            "curl_4.3",
+            "e1071_1.7.6",
+            "class_7.3.18",
+            "KernSmooth_2.23.18",
+            "MASS_7.3.53.1",
+            "proxy_0.4.25"
+        ],
+        "Application": "StoX 3.0.0",
+        "models": {
+            "baseline": [
+                {
+                    "processName": "DefineStratumPolygon",
+                    "functionName": "RstoxBase::DefineStratumPolygon",
+                    "functionInputs": {
+
+                    },
+                    "functionParameters": {
+                        "UseProcessData": true,
+                        "DefinitionMethod": "ResourceFile",
+                        "FileName": "input/stratumPolygon.txt"
+                    },
+                    "processParameters": {
+                        "enabled": true,
+                        "showInMap": true,
+                        "fileOutput": true
+                    },
+                    "processData": {
+                        "StratumPolygon": {
+                            "type": "FeatureCollection",
+                            "features": [
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s1"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    16.56027741,
+                                                    69.33002978
+                                                ],
+                                                [
+                                                    15.91876996,
+                                                    70.38697725
+                                                ],
+                                                [
+                                                    16.77237007,
+                                                    70.64581895
+                                                ],
+                                                [
+                                                    17.74114489,
+                                                    70.93164723
+                                                ],
+                                                [
+                                                    19.28749806,
+                                                    70.28999873
+                                                ],
+                                                [
+                                                    19.09424443,
+                                                    70.25770021
+                                                ],
+                                                [
+                                                    18.97003103,
+                                                    70.14240022
+                                                ],
+                                                [
+                                                    18.70466327,
+                                                    70.1423902
+                                                ],
+                                                [
+                                                    18.56208715,
+                                                    70.00703287
+                                                ],
+                                                [
+                                                    18.66625978,
+                                                    69.90617042
+                                                ],
+                                                [
+                                                    18.39150078,
+                                                    69.81748865
+                                                ],
+                                                [
+                                                    17.85851866,
+                                                    69.64397427
+                                                ],
+                                                [
+                                                    17.44632632,
+                                                    69.60259316
+                                                ],
+                                                [
+                                                    16.56027741,
+                                                    69.33002978
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s2"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    17.73676649,
+                                                    70.92030297
+                                                ],
+                                                [
+                                                    20.12703796,
+                                                    71.49321105
+                                                ],
+                                                [
+                                                    20.76340997,
+                                                    71.61833145
+                                                ],
+                                                [
+                                                    21.8684056,
+                                                    70.66724929
+                                                ],
+                                                [
+                                                    22.0406953,
+                                                    70.56126223
+                                                ],
+                                                [
+                                                    21.67809094,
+                                                    70.4179887
+                                                ],
+                                                [
+                                                    21.67809094,
+                                                    70.4179887
+                                                ],
+                                                [
+                                                    21.18848799,
+                                                    70.22015367
+                                                ],
+                                                [
+                                                    20.76613114,
+                                                    70.24725842
+                                                ],
+                                                [
+                                                    20.4875787,
+                                                    70.23315149
+                                                ],
+                                                [
+                                                    20.23255225,
+                                                    70.10893366
+                                                ],
+                                                [
+                                                    19.86234544,
+                                                    70.18851832
+                                                ],
+                                                [
+                                                    19.6812861,
+                                                    70.30311977
+                                                ],
+                                                [
+                                                    19.44176638,
+                                                    70.2336962
+                                                ],
+                                                [
+                                                    19.29174295,
+                                                    70.29174685
+                                                ],
+                                                [
+                                                    17.73676649,
+                                                    70.92030297
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s3"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    20.75372645,
+                                                    71.62271797
+                                                ],
+                                                [
+                                                    22.03501476,
+                                                    71.8794797
+                                                ],
+                                                [
+                                                    23.42269469,
+                                                    72.05300512
+                                                ],
+                                                [
+                                                    24.90474789,
+                                                    72.16092385
+                                                ],
+                                                [
+                                                    24.53631863,
+                                                    71.25978156
+                                                ],
+                                                [
+                                                    24.48406345,
+                                                    71.11698659
+                                                ],
+                                                [
+                                                    23.85345961,
+                                                    71.02815215
+                                                ],
+                                                [
+                                                    23.66692917,
+                                                    70.85717046
+                                                ],
+                                                [
+                                                    23.27949638,
+                                                    70.88120232
+                                                ],
+                                                [
+                                                    22.97033075,
+                                                    70.73116824
+                                                ],
+                                                [
+                                                    22.78152862,
+                                                    70.77873891
+                                                ],
+                                                [
+                                                    22.39368212,
+                                                    70.7377915
+                                                ],
+                                                [
+                                                    22.19926529,
+                                                    70.68389916
+                                                ],
+                                                [
+                                                    21.88812396,
+                                                    70.65849812
+                                                ],
+                                                [
+                                                    21.81829147,
+                                                    70.73260977
+                                                ],
+                                                [
+                                                    20.75372645,
+                                                    71.62271797
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s4"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    25.9578298,
+                                                    72.20282481
+                                                ],
+                                                [
+                                                    27.91207331,
+                                                    72.0904667
+                                                ],
+                                                [
+                                                    28.95176673,
+                                                    71.97875927
+                                                ],
+                                                [
+                                                    28.18247655,
+                                                    71.10369218
+                                                ],
+                                                [
+                                                    27.57059845,
+                                                    71.12842045
+                                                ],
+                                                [
+                                                    27.18329286,
+                                                    71.03781262
+                                                ],
+                                                [
+                                                    27.00728503,
+                                                    70.96020336
+                                                ],
+                                                [
+                                                    26.58104748,
+                                                    70.96552488
+                                                ],
+                                                [
+                                                    26.30071202,
+                                                    71.02810768
+                                                ],
+                                                [
+                                                    25.86823626,
+                                                    71.1828221
+                                                ],
+                                                [
+                                                    25.44912287,
+                                                    71.13343679
+                                                ],
+                                                [
+                                                    25.01954273,
+                                                    71.07795031
+                                                ],
+                                                [
+                                                    24.73066751,
+                                                    71.13527827
+                                                ],
+                                                [
+                                                    24.46290708,
+                                                    71.11270313
+                                                ],
+                                                [
+                                                    24.53693539,
+                                                    71.33310249
+                                                ],
+                                                [
+                                                    24.88977916,
+                                                    72.1580976
+                                                ],
+                                                [
+                                                    25.9578298,
+                                                    72.20282481
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s5"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    28.95928112,
+                                                    71.98602332
+                                                ],
+                                                [
+                                                    30.6554542,
+                                                    71.76793541
+                                                ],
+                                                [
+                                                    31.28175505,
+                                                    71.61196909
+                                                ],
+                                                [
+                                                    29.80925145,
+                                                    70.75554457
+                                                ],
+                                                [
+                                                    29.03664426,
+                                                    70.90027782
+                                                ],
+                                                [
+                                                    28.69274498,
+                                                    70.91183212
+                                                ],
+                                                [
+                                                    28.58647981,
+                                                    70.99680101
+                                                ],
+                                                [
+                                                    28.18574514,
+                                                    71.11039102
+                                                ],
+                                                [
+                                                    28.95928112,
+                                                    71.98602332
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s6"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    31.28586776,
+                                                    71.61555335
+                                                ],
+                                                [
+                                                    33.24287907,
+                                                    70.89976149
+                                                ],
+                                                [
+                                                    32.09735103,
+                                                    70.16635345
+                                                ],
+                                                [
+                                                    30.86718577,
+                                                    69.91906829
+                                                ],
+                                                [
+                                                    30.36429209,
+                                                    69.98545339
+                                                ],
+                                                [
+                                                    30.19831283,
+                                                    70.06627345
+                                                ],
+                                                [
+                                                    30.42299412,
+                                                    70.13454277
+                                                ],
+                                                [
+                                                    30.86654665,
+                                                    70.22236633
+                                                ],
+                                                [
+                                                    31.13598654,
+                                                    70.29175509
+                                                ],
+                                                [
+                                                    30.99511204,
+                                                    70.4619727
+                                                ],
+                                                [
+                                                    30.43206086,
+                                                    70.58721385
+                                                ],
+                                                [
+                                                    30.16420271,
+                                                    70.71764202
+                                                ],
+                                                [
+                                                    29.8270294,
+                                                    70.7536634
+                                                ],
+                                                [
+                                                    31.28586776,
+                                                    71.61555335
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "s7"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    24.8957947,
+                                                    72.17011258321706
+                                                ],
+                                                [
+                                                    25.186893860000006,
+                                                    72.67590147314842
+                                                ],
+                                                [
+                                                    26.883914843773149,
+                                                    72.81151075424146
+                                                ],
+                                                [
+                                                    30.33153497072905,
+                                                    72.48161473228459
+                                                ],
+                                                [
+                                                    31.533988260000006,
+                                                    72.19985446321256
+                                                ],
+                                                [
+                                                    32.04119564999999,
+                                                    72.0247998732398
+                                                ],
+                                                [
+                                                    31.241507649999997,
+                                                    71.59842773331471
+                                                ],
+                                                [
+                                                    30.70439151000001,
+                                                    71.77237346328282
+                                                ],
+                                                [
+                                                    28.963928310000005,
+                                                    71.99207967324513
+                                                ],
+                                                [
+                                                    26.73393853999999,
+                                                    72.18081579321535
+                                                ],
+                                                [
+                                                    26.240792870000008,
+                                                    72.20229504321203
+                                                ],
+                                                [
+                                                    26.20495442,
+                                                    72.19586399321314
+                                                ],
+                                                [
+                                                    26.240792870000008,
+                                                    72.20229504321203
+                                                ],
+                                                [
+                                                    24.8957947,
+                                                    72.17011258321706
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "polygonName": "bla"
+                                    },
+                                    "geometry": {
+                                        "type": "Polygon",
+                                        "coordinates": [
+                                            [
+                                                [
+                                                    23.89935327379071,
+                                                    73.18960131893167
+                                                ],
+                                                [
+                                                    25.6839473447618,
+                                                    73.9503748986842
+                                                ],
+                                                [
+                                                    35.1181084781641,
+                                                    73.01950535361506
+                                                ],
+                                                [
+                                                    34.89039881022207,
+                                                    72.06251119278675
+                                                ],
+                                                [
+                                                    30.01448759731324,
+                                                    72.63279332074164
+                                                ],
+                                                [
+                                                    23.89935327379071,
+                                                    73.18960131893167
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "processName": "StratumArea",
+                    "functionName": "RstoxBase::StratumArea",
+                    "functionInputs": {
+                        "StratumPolygon": "DefineStratumPolygon"
+                    },
+                    "functionParameters": {
+                        "AreaMethod": "Accurate"
+                    },
+                    "processParameters": {
+                        "enabled": true,
+                        "showInMap": false,
+                        "fileOutput": true
+                    },
+                    "processData": [
+
+                    ]
+                }
+            ],
+            "analysis": [
+                {
+                    "processName": "Bootstrap",
+                    "functionName": "RstoxFramework::Bootstrap",
+                    "functionInputs": {
+
+                    },
+                    "functionParameters": {
+                        "BootstrapMethodTable": [
+                            {
+                                "ResampleFunction": "ResampleMeanNASCData",
+                                "ProcessName": "MeanNASC",
+                                "Seed": 1
+                            },
+                            {
+                                "ResampleFunction": "ResampleBioticAssignment",
+                                "ProcessName": "DefineBioticAssignment",
+                                "Seed": 2
+                            }
+                        ],
+                        "NumberOfBootstraps": 100,
+                        "OutputProcesses": [
+                            "ImputeSuperIndividuals",
+                            "SuperIndividuals"
+                        ],
+                        "UseOutputData": false
+                    },
+                    "processParameters": {
+                        "enabled": true,
+                        "showInMap": false,
+                        "fileOutput": true
+                    },
+                    "processData": [
+
+                    ]
+                }
+            ],
+            "report": [
+                {
+                    "processName": "ReportBootstrap",
+                    "functionName": "RstoxFramework::ReportBootstrap",
+                    "functionInputs": {
+                        "BootstrapData": "Bootstrap"
+                    },
+                    "functionParameters": {
+                        "BaselineProcess": "ImputeSuperIndividuals",
+                        "TargetVariable": "Biomass",
+                        "AggregationFunction": "sum",
+                        "BootstrapReportFunction": "summaryStox",
+                        "GroupingVariables": [
+
+                        ],
+                        "RemoveMissingValues": true,
+                        "AggregationWeightingVariable": [
+
+                        ],
+                        "BootstrapReportWeightingVariable": [
+
+                        ]
+                    },
+                    "processParameters": {
+                        "enabled": true,
+                        "showInMap": false,
+                        "fileOutput": true
+                    },
+                    "processData": [
+
+                    ]
+                },
+                {
+                    "processName": "ReportBootstrap_InndividualAge",
+                    "functionName": "RstoxFramework::ReportBootstrap",
+                    "functionInputs": {
+                        "BootstrapData": "Bootstrap"
+                    },
+                    "functionParameters": {
+                        "BaselineProcess": "ImputeSuperIndividuals",
+                        "TargetVariable": "Biomass",
+                        "AggregationFunction": "sum",
+                        "BootstrapReportFunction": "summaryStox",
+                        "GroupingVariables": "IndividualAge",
+                        "RemoveMissingValues": true,
+                        "AggregationWeightingVariable": [
+
+                        ],
+                        "BootstrapReportWeightingVariable": [
+
+                        ]
+                    },
+                    "processParameters": {
+                        "enabled": true,
+                        "showInMap": false,
+                        "fileOutput": true
+                    },
+                    "processData": [
+
+                    ]
+                },
+                {
+                    "processName": "ReportBootstrap_Stratum",
+                    "functionName": "RstoxFramework::ReportBootstrap",
+                    "functionInputs": {
+                        "BootstrapData": "Bootstrap"
+                    },
+                    "functionParameters": {
+                        "BaselineProcess": "ImputeSuperIndividuals",
+                        "TargetVariable": "Biomass",
+                        "AggregationFunction": "sum",
+                        "BootstrapReportFunction": "summaryStox",
+                        "GroupingVariables": "Stratum",
+                        "RemoveMissingValues": true,
+                        "AggregationWeightingVariable": [
+
+                        ],
+                        "BootstrapReportWeightingVariable": [
+
+                        ]
+                    },
+                    "processParameters": {
+                        "enabled": true,
+                        "showInMap": false,
+                        "fileOutput": true
+                    },
+                    "processData": [
+
+                    ]
+                }
+            ]
+        }
+    }
+}
+

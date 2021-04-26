@@ -1,8 +1,7 @@
 #' Splits transects by strata and writes gpx-files to a given directory.
 #'
-#' @param file Name of gpx output file
-#' @param lat,lon Latitude and longitude of route-points.
-#' @param name Name of route-point, e.g 1 thru number of rte-points.
+#' @param surv Name of 'surveyPlanner' survey plan output 
+#' @param dir_name Name of directory for writing gpx-es to.
 #' @keywords gpx, lat, lon, route
 #' @return Writes a gpx-file of a single route.
 #' @export
