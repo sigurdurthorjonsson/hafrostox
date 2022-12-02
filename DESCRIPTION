@@ -1,6 +1,6 @@
 Package: hafrostox
 Title: Utils for Rstox-surveyPlanner with some GPX and 'sf' I/O
-Version: 0.1.0.9000
+Version: 0.2.0.9000
 Date: 2022-12-02
 Authors@R: 
     c(person(given = "Sigurdur Thor",
