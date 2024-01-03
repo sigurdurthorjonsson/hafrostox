@@ -53,6 +53,112 @@ isProject <- function(projectName, subset.out=FALSE){
         hasStoX_data_sources(projectName, subset.out=subset.out)
 }
 
+#' 
+#' @export
+#' @rdname createProject        
+#'
+getProject <- function(projectName, out=c("project", "baseline", "baseline-report", "name"), msg=FALSE){
+        # Return immediately if a project or baseline object is given:
+        if(class(projectName) == "jobjRef"){
+                if(projectName@jclass=="no/imr/stox/model/Project"){
+                        project <- projectName
+                }
+                else if(projectName@jclass=="no/imr/stox/model/Model"){
+                        project <- projectName$getProject()
+                }
+        } 
+        # Check for the existence of the project object in the RstoxEnv evnironment (getProjectPaths(projectName)$projectName assures that the project name is used and not the full project path if given in 'projectName'):
+        #else if(is.character(projectName) && nchar(projectName)>0 && length(getRstoxEnv()[[getProjectPaths(projectName)$projectName]]$projectObject)>0){
+        else if(is.character(projectName) && nchar(projectName)>0){
+                # Get the project paths from the projectName:
+                projectPaths <- getProjectPaths(projectName)
+                
+                # List open projects:
+                projectList <- listOpenProjects()
+                
+                #projectName <- temp$projectName
+                #projectPath <- temp$projectPath
+                #if(length(getRstoxEnv()$Projects[[projectName]]$projectObject)){
+                if(projectPaths$projectName %in% projectList$projectName){
+                        if(msg || !projectPaths$projectPath %in% projectList$projectPath){
+                                warning(paste0("Project retrieved from RstoxEnv$Projects[['", projectName, "']]. To reopen the project use reopenProject(", projectName, ")"))
+                        }
+                        #project <- getRstoxEnv()$Projects[[projectName]]$projectObject
+                        project <- getRstoxEnv()$Projects[[projectPaths$projectName]]$projectObject
+                }
+                else{
+                        return(NULL)
+                }
+                #return(getRstoxEnv()[[projectName]]$projectObject)
+        }
+        else{
+                return(NULL)
+        }
+                
+        # Get the StoX Java function:
+        modelTypeJavaFun <- getModelType(out[1])$fun
+        
+        # Return either the project object itself, or the funciton identified using modelTypeJavaFun():
+        if(startsWith(tolower(out[1]), "project")){
+                return(project)
+        } 
+        else if(is.na(modelTypeJavaFun)){
+                warning("Invalid value of 'out'")
+                return(NULL)
+        }                       
+        else{                   
+                return(.jrcall(project, modelTypeJavaFun))
+        }                       
+                                
+                        
+        #       
+        ## Return a baseline object:
+        #if(startsWith(tolower(out[1]), "baseline")){
+        #       return(project$getBaseline())
+        #}
+        ## Return the baseline report object:
+        #if(startsWith(tolower(out[1]), "report")){
+        #       return(project$getBaselineReport())
+        #}
+        ## Return the project object:
+        #else if(startsWith(tolower(out[1]), "project")){
+        #       return(project)
+        #}
+        ## Return the project name:
+        #else if(startsWith(tolower(out[1]), "name")){
+        #       return(project$getProjectName())
+        #}
+        #else{
+        #       warning("Invalid value of 'out'")
+        #       return(NULL)
+        #}
+}
+ 
+#*********************************************
+#*********************************************
+#' Initialize rJava
+#'
+#' This funcion initializes the connection to Java.
+#'
+#' @import grDevices
+#' @import graphics
+#' @import stats
+#' @import utils
+#'
+#' @importFrom rJava .jpackage
+#' @export
+#' @keywords internal
+#'
+Rstox.init <- function() {
+        # Package initialization of rJava. Note that the documentatino of this functions also contains importing of the four packages grDevices, graphics, stats and utils. This is a bit of cheating, but avoids using :: for such common functions.
+        pkgname <- "Rstox";
+        loc = dirname(path.package(pkgname))
+        # rJava - load jar files in package java directory
+        .jpackage(pkgname, lib.loc=loc)
+}
+
+
+
 #'
 #' @export
 #'
@@ -126,6 +232,391 @@ getBaseline <- function(projectName, input=c("par", "proc"), proc="all", drop=TR
         }
 
         invisible(out)
+}
+
+#*********************************************
+#*********************************************
+#' Run a StoX baseline model
+#'
+#' \code{runBaseline} runs a StoX baseline model possibily overriding parameters. \cr \cr
+#' \code{getBaseline} returns input and output data from the StoX baseline model. \cr \cr
+#'
+#' The parameters startProcess and endProcess specify the range of processes to run (startProcess : endProcess). If the model has been run already for all or some of the processes in this range, only the unrun processes are run. If there are processes in or prior to this range for which parameters have changed, all processes from the first changed process and throughout the range startProcess : endProcess are rerun. The range of processes to run is extended to any changed processes beyond the range. If reset=TRUE, the range or processes to run is extended to the range startProcess : endProcess regardless of whether the processes have previouslu been run.
+#'
+#' @param projectName                   The name or full path of the project, a baseline object (as returned from \code{\link{getBaseline}} or \code{\link{runBaseline}}, og a project object (as returned from \code{\link{openProject}}).
+#' @param startProcess                  The name or number of the start process in the list of processes in the model (run \code{\link{runBaseline}} to get the processes of the project). The use of startProcess and endProcess requres that either no processes in the given range of processes depends on processes outside of the range, or that a baseline object is given in the input.
+#' @param endProcess                    The name or number of the end process in the list of processes in the model.
+#' @param reset                                 Logical; if TRUE rerun the baseline model even if it has been run previously.
+#' @param save                                  Logical; if TRUE changes to the project specified in parlist and "..." are saved in Java and to the object javaParameters in the project list in the RstoxEnv environment.
+#' @param out                                   The object to return from runBaseline(), one of "name" (projectName), "baseline" (Java baseline object) or "project" (Java project object, containing the baseline object). First element used.
+#' @param modelType                             The type of model to run, currently one of "baseline" and "baseline-report". First element used.
+#' @param msg                                   Logical: if TRUE print information about the progress of reading the data.
+#' @param exportCSV                             Logical: if TRUE turn on exporting csv files from the baseline run.
+#' @param warningLevel                  The warning level used in the baseline run, where 0 stops the baseline for Java warnings, and 1 continues with a warning.
+#' @param tempRScriptFileName   A file name specifying the temporary R script that StoX writes and sources e.g. for stratum area calculation using the accurate method.
+#' @param parlist                               List of parameters values overriding existing parameter values. These are specified as processName = list(parameter = value), for example AcousticDensity = list(a = -70, m = 10), BioStationWeighting = list(WeightingMethod = "NASC", a = -70, m = 10). Logical parameters (given as strings "true"/"false" in StoX) can be given as logical TRUE/FALSE.
+#' @param ...                                   Same as parlist, but can be specified separately (not in a list but as separate inputs).
+#' @param input                                 The input data requested in getBaseline(). This is a string vector naming baseline processes and process data. The key words "par" and "proc" returns all parameters and process data, respectively.
+#' @param proc                                  A string vector naming processes from which data should be returned.
+#' @param par                                   A list of the same length as \code{fun} giving parameter values to uniquely identify processes. The list names are the names of the baseline process parameters, and the values are the baseline process values.
+#' @param drop                                  Logical: if TRUE drop empty list elements (default).
+#' @param close                                 Logical: if TRUE close the project on exit of the function (for \code{getBaseline}).
+#' @param fresh                                 Logical: if TRUE write new r.R and r-report.R scripts to the folder output/r.
+#' @param add.time                              Logical: if TRUE add the current time to messages printed to the console in \code{runRScripts}.
+#'
+#' When a StoX project has been run using \code{runBaseline} or \code{getBaseline}, the Java object of the project is saved in the project environment, see names(RstoxEnv$Projects). If there are changes made in the project, e.g., replaced files or manual changes in the project.xml file
+#'
+#' @return For \code{\link{runBaseline}} theproject name, and for \code{\link{getBaseline}} a list of three elements named "parameters", "outputData", "processData", where empty elements can be dropped.
+#'
+#' @examples
+#' # Get output from the baseline:
+#' projectName <- "Test_Rstox"
+#' system.time(baselineData <- getBaseline(projectName))
+#' # Check the structure of the output from getBaseline():
+#' ls.str(baselineData)
+#'
+#' # The predefined values of the parameters are included as attributes to the list of parameters:
+#' baselineData$parameters$NASC
+#' # To get a clean list of all predefined values run the following:
+#' att <- rapply(baselineData$parameters, attributes, how="replace")
+#' # The cleaned list has named PROCESSNAME.PARAMETERNAME.predefinedValues:
+#' unlist(unlist(att, recursive=FALSE), recursive=FALSE)
+#'
+#' # Override parameters in the baseline:
+#' system.time(baselineDataMod <- getBaseline(projectName,
+#'     AcousticDensity = list(a = -70, m = 10),
+#'     BioStationWeighting = list(WeightingMethod = "NASC", Radius=100, a = -70, m = 10)))
+#'
+#' # Check differences in parameters and data saved by the baseline model:
+#' all.equal(baselineData, baselineDataMod)
+#'
+#' @export
+#' @rdname runBaseline
+#' 
+runBaseline <- function(projectName, out=c("project", "baseline", "baseline-report", "name"), startProcess=1, endProcess=Inf, reset=FALSE, save=FALSE, modelType="baseline", msg=TRUE, exportCSV=FALSE, warningLevel=0, tempRScriptFileName=NULL, parlist=list(), ...){
+
+        # Function for extracting a range covering a series of ranges:
+        setProcRange <- function(...){
+                l <- unlist(list(...))
+                if(length(l)==0){
+                        return(NULL)
+                }
+                else{
+                        temp <- range(l)
+                        do.call(seq, as.list(temp))
+                }
+        }
+
+        # Open the project (avoiding generating multiple identical project which demands memory in Java):
+        #projectName <- getProjectPaths(projectName)$projectName
+        # If reset==TRUE allow for the warning in getProject():
+
+        if(length(projectName)){
+                #baseline <- openProject(projectName, out="baseline")
+                baseline <- openProject(projectName, out=modelType[1])
+        }
+        else{
+                warning("Empty 'projectName'")
+                return(NULL)
+        }
+
+        # Set the tempRScriptFileName if specified. This can be used when running getBaseline() in parallel, to ensure that each run writes and sources unique R scripts:
+        if(length(tempRScriptFileName) && is.character(tempRScriptFileName)){
+                setTempRScriptFileName(projectName, tempRScriptFileName, msg=msg)
+        }
+
+        # Avoid breaks in the baseline, and set the warning level (used in bootstrapping to ease warnings):
+        baseline$setBreakable(jBoolean(FALSE))
+        baseline$setWarningLevel(jInt(warningLevel))
+
+        # If exportCSV==TRUE, reset the baseline (changed on 2018-08-28):
+        if(!exportCSV){
+                baseline$setExportCSV(jBoolean(FALSE))
+        }
+        else{
+                cat("Exporting CSV files (rerunning baseline)...\n")
+                baseline$setExportCSV(jBoolean(TRUE))
+                reset <- TRUE
+        }
+
+        # Remove processes that saves the project.xml file, which is assumed to ALWAYS be the last process. Please ask Åsmund to set this as a requirement in StoX:
+        #numProcesses      <- baseline$getProcessList()$size() - length(baseline$getProcessByFunctionName("WriteProcessData"))
+        # Change on 2018-09-21, counting the number of save processes:
+        numProcesses      <- baseline$getProcessList()$size() - length(JavaString2vector(baseline$getProcessesByFunctionName("WriteProcessData")))
+        currentEndProcess <- baseline$getRunningProcessIdx() + 1
+
+
+        ############################################################
+        ######################## Processes: ########################
+        ############################################################
+        # Define the unrun processes, which is NULL if the current end process is larger or equal to the number of processes (excluding the function "WriteProcessData"):
+        if(currentEndProcess >= numProcesses){
+                procUnrun <- NULL
+        }
+        else{
+                procUnrun <- seq(currentEndProcess + 1, numProcesses)
+        }
+
+        # Get the processes to run:
+        startProcess <- getProcess(projectName, proc=startProcess, modelType=modelType[1])
+        endProcess   <- getProcess(projectName, proc=endProcess, modelType=modelType[1])
+        procStartEnd <- seq(startProcess, endProcess)
+
+        # Get the changed processes:
+        # Detect changes to the baseline parameters compared to the last used parameters. This is done only to determine whether the baseline should be rerun. Using save=FALSE ensures that the parameters are not set but simply that changes are identified:
+        procChanged <- setBaselineParameters(baseline, parlist=parlist, msg=FALSE, save=FALSE, ...)
+
+        #
+        #parlist <- getParlist(parlist=parlist, ...)
+        #javapar <- getBaselineParameters(projectName, out=modelType[1])$java # Use out=modelType
+        #newpar  <- modifyBaselineParameters(projectName, javapar, parlist=parlist)$parameters
+        #lastpar <- getBaselineParameters(projectName, out=modelType[1])$last # Use out=modelType
+        #
+        ## Change made on 2017-09-15: If no valid processes are given in parlist or ..., using which() around the following line returned an error. which() is now moved to inside the if(any(changedProcesses)){}:
+        #procChanged <- which(sapply(seq_along(newpar), function(i) !identical(newpar[[i]], lastpar[[i]])))
+        ## Convert to all indices covered by the range of changed processes:
+        #if(length(procChanged)){
+        #       procChanged <- seq(min(procChanged), max(procChanged, endProcess))
+        #}
+        ############################################################
+
+
+        ### # Regardless of the value of reset, we rerun the span of the range of procUnrun and procChanged. That is, if there are processes that are have not been run or have had parameters changed in memory, rerun:
+        ### procTorun <- setProcRange(procUnrun, procChanged)
+        ###
+        ### # If reset=TRUE, we also include the processes specified through 'startProcess' and 'endProcess':
+        ### if(reset){
+        ###     procTorun <- setProcRange(procTorun, procStartEnd)
+        ### }
+        ###
+        ###
+
+        # The parameters startProcess and endProcess specify the range of processes to run (startProcess : endProcess). If the model has been run already for all or some of the processes in this range, only the unrun processes are run. If there are processes in or prior to this range for which parameters have changed, all processes from the first changed process and throughout the range startProcess : endProcess are rerun. The range of processes to run is extended to any changed processes beyond the range. If reset=TRUE, the range or processes to run is extended to the range startProcess : endProcess regardless of whether the processes have previouslu been run.
+
+
+        # 1. If any of 1:End are unrun or changed, run from the first of these to End:
+        if(any(c(procUnrun, procChanged) %in% seq_len(max(procStartEnd)))){
+                procTorun <- seq(min(procUnrun, procChanged), max(procStartEnd))
+        }
+        else{
+                procTorun <- NULL
+        }
+
+        # 2. If reset=TRUE, extend to the range of procStartEnd:
+        if(reset){
+                procTorun <- setProcRange(procTorun, procStartEnd)
+        }
+
+        # 3. If any of procChanged > procTorun, run to the max of these:
+        if(any(procChanged > suppressWarnings(max(procTorun)))){
+                procTorun <- setProcRange(procTorun, procChanged)
+        }
+
+        # Remove 0:
+        procTorun <- procTorun[procTorun > 0]
+
+
+        ### # 1. If there are unrun processes in procStartEnd, use this as the last funciton to run
+        ### if(suppressWarnings(min(procUnrun)) <= max(procStartEnd)){
+        ###     procTorun <- seq(min(procUnrun), max(procStartEnd))
+        ### }
+        ### else{
+        ###     procTorun <- NULL
+        ### }
+        ###
+        ### # 2. If reset=TRUE, extend to the range of procStartEnd:
+        ### if(reset){
+        ###     procTorun <- setProcRange(procTorun, procStartEnd)
+        ### }
+        ###
+        ### # 3. If there are processes with changed parameters, expand by the range of these. The changed processes takes presedence:
+        ### if(length(procChanged)){
+        ###     procTorun <- setProcRange(procTorun, procChanged)
+        ### }
+
+        # Override parameters in the baseline:
+        #if(run){
+        if(length(procTorun)){
+                startProcess <- min(procTorun)
+                endProcess <- max(procTorun)
+                #if(msg)        {cat("Running baseline process ", startProcess, " to ", endProcess, " (out of ", numProcesses, " processes, excluding save processes)\n", sep="")}
+                if(msg) {cat("Running ", modelType[1], " process ", startProcess, " to ", endProcess, " (out of ", numProcesses, " processes)\n", sep="")}
+
+                # If parameters are given, override the java parameters in memory, and store the java (if save=TRUE) and last used parameters:
+                if(length(procChanged)){
+                #if(length(parlist)){
+                         # Get the java parameters for use later if save==FALSE:
+                         if(!save){
+                                javapar <- getBaselineParameters(projectName, modelType=modelType[1])$java # Use out=modelType
+                                #javapar <- getBaselineParameters(projectName)$java # Use out=modelType
+                         }
+                        # Set the new parameters:
+                        newpar <- setBaselineParameters(baseline, parlist=parlist, msg=FALSE, save=c("last", "java"), ...)
+                        ### ACCOUNTED FOR IN setBaselineParameters() # Make sure that processes are given by the correct form "Process(processName)"
+                        ### ACCOUNTED FOR IN setBaselineParameters() newpar <- getParlist(newpar)
+
+                        # Run the baseline:
+                        baseline$run(jInt(startProcess), jInt(endProcess), jBoolean(FALSE))
+
+                        # Set the 'javaParameters' object and the parameters in Java memory back to the original:
+                        if(!save){
+                                setBaselineParameters(baseline, parlist=javapar, msg=FALSE, save="java")
+                        }
+                }
+                else{
+                        # Run the baseline:
+                        baseline$run(jInt(startProcess), jInt(endProcess), jBoolean(FALSE))
+                }
+        }
+
+        # Return the object specified in 'out':
+        #return(getProject(projectName, out=out))
+        return(getProject(baseline, out=out))
+        ## Return a baseline object:
+        #if(tolower(substr(out[1], 1, 1)) == "b"){
+        #       return(baseline)
+        #}
+        ## Return the project object:
+        #if(tolower(substr(out[1], 1, 1)) == "p"){
+        #       return(baseline$getProject())
+        #}
+        ## Return the project name:
+        #else{
+        #       return(projectName)
+        #}
+}
+
+#' 
+#' @importFrom rJava J
+#' @export
+#' @rdname createProject        
+#'
+openProject <- function(projectName=NULL, out=c("project", "baseline", "baseline-report", "name"), msg=FALSE){
+        # Old version, listing everything in the default workspace:
+        #return(list.files(J("no.imr.stox.functions.utils.ProjectUtils")$getSystemProjectRoot()))
+        
+        # Initialize the list of available projects, and get this list only if neseccary:
+        availableProjects <- NULL
+         
+        # If nothing is given return a list of the projects in the StoX project directory:
+        if(length(projectName)==0){
+                # Get the available projects, ordered from the top level and down:
+                availableProjects <- getAvailableProjects()
+                if(is.list(projectName)){
+                        return(availableProjects$projectNameList)
+                }
+                else{
+                        return(availableProjects$projectPaths)
+                }
+        } 
+  
+        # Get the project Java object, possibly retrieved from the project environment (getProject() uses getProjectPaths() if a character is given):
+        project <- getProject(projectName, msg=msg)
+        
+        # Otherwise, open the project, generate the project object, and save it to the RstoxEnv evnironment:
+        if(length(project)==0){
+                # Search for the project:
+                if(!isProject(projectName)){
+                        # Get the available projects, ordered from the top level and down:
+                        if(length(availableProjects)==0){
+                                availableProjects <- getAvailableProjects() 
+                        }
+  
+                        # If the Test_Rstox project is requested, create it:
+                        if(identical(projectName, "Test_Rstox")){
+                                temp <- createProject("Test_Rstox")
+                                availableProjects$projectPaths <- c(temp, availableProjects$projectPaths)
+                        }
+            
+                        # Get avaiable project names and match against the requested project. The top levels are prioritized in availableProjects$projectPaths:
+                        availableProjectNames <- basename(availableProjects$projectPaths)
+                        matches <- which(availableProjectNames %in% getProjectPaths(projectName)$projectName)
+                        if(length(matches)==0){
+                                warning(paste0("The StoX project \"", projectName, "\" not found in the default workspace \"", availableProjects$workspace, "\". For projects not located in this directory or its sub directories, the full path to the project folder must be specified."))
+                                return(NULL)
+                        }
+                        else if(length(matches)>1){
+                                #warning(paste0("Multiple StoX projects matching \"", projectName, "\". Use the full path, or path relative to the default workspace, to specify the project uniquely. The first of the following list selected:\n", paste0("\t", availableProjects$projectPaths[matches], collapse="\n")))
+                                warning.length <- options("warning.length")
+                                options(warning.length = 8170L)
+                                stop(paste0("Multiple StoX projects matching \"", projectName, "\". Use the full path, or path relative to the default workspace (", getProjectPaths()$projectRoot, ") to specify the project uniquely:\n", paste0("\t", availableProjects$projectPaths[matches], collapse="\n")))
+                                options(warning.length = warning.length)
+                        }       
+                        projectName <- availableProjects$projectPaths[matches[1]]
+                }       
+                
+
+                projectPaths <- getProjectPaths(projectName)
+                projectName <- projectPaths$projectName
+                projectRoot <- projectPaths$projectRoot
+                projectPath <- projectPaths$projectPath
+                ########## Open the project in Java memory: ##########
+                Rstox.init()
+                project <- J("no.imr.stox.factory.FactoryUtil")$openProject(projectRoot, projectName)
+                # This line was added on 2017-08-23 due to a bug discovered when estimating the area of polygons using the "accurate" method. When baseline is run, Java calls the function polyArea() when AreaMethod="accurate". However, whenever this failed, the simple method implemented in Java was used (which was a bug). The problem was that the path to the R-bin was not set in Rstox. To solve this, a file holding this path (or the command project$setRFolder(PATH_TO_R_BIN)) will be saved by StoX, and called every time a triggerscript is run. In Rstox we solve the problem by the below sequence:
+                RFolder <- project$getRFolder()
+                #__# RFolder <- .jcall(project, "S", "getRFolder")
+                if(length(RFolder)==0 || (is.character(RFolder) && nchar(RFolder)==0)){
+                        project$setRFolder(R.home("bin"))
+                        #__# RFolder <- .jcall(project, "S", "setRFolder", R.home("bin"))
+                }
+                ############################################### ######
+
+                ########## Open the project in R memory: ##########
+                # Create a list for the project in the environment 'RstoxEnv':
+                parameters <- readBaselineParametersJava(project)
+                # The first line (temp <- getRstoxEnv()) is needed to assure that the RstoxEnv environment is loaded:
+                temp <- getRstoxEnv()
+                RstoxEnv$Projects[[projectName]] <- list(originalParameters=parameters, savedParameters=parameters, javaParameters=parameters, lastParameters=parameters, projectObject=project, projectPath=projectPath, projectData=new.env())
+                #assign(projectName, list(originalParameters=parameters, javaParameters=parameters, lastParameters=parameters, projectObject=project, projectData=new.env()), envir=getRstoxEnv())
+                ##assign(getRstoxEnv()[[projectName]], list(originalParameters=parameters, javaParameters=parameters, lastParameters=parameters, projectObject=project, projectData=new.env()))
+                ###getRstoxEnv()[[projectName]] <- list(originalParameters=parameters, javaParameters=parameters, lastParameters=parameters, projectObject=project, projectData=new.env())
+                # Also add the last used parameters to the projectData, in order to save this to file.
+                ##### NOTE (2017-08-28): This is different from the 'lastParameters' object in the project environment (rstoxEnv[[projectName]]), and is only used when writing project data such as bootstrap results to file: #####
+                setProjectData(projectName=projectName, var=parameters, name="lastParameters")
+
+                # As of version 1.4.2, create the new folder structure:
+                suppressWarnings(dir.create(projectPaths$RDataDir, recursive=TRUE))
+                suppressWarnings(dir.create(projectPaths$RReportDir, recursive=TRUE))
+                ###################################################
+                #}
+        }
+        ### # Return a baseline object:
+        ### if(tolower(substr(out[1], 1, 1)) == "b"){
+        ###     return(project$getBaseline())
+        ### }
+        ### # Return the project object:
+        ### else if(tolower(substr(out[1], 1, 1)) == "p"){
+        ###     return(project)
+        ### }
+        ### # Return the project name:
+        ### else if(tolower(substr(out[1], 1, 1)) == "n"){
+        ###     return(project$getProjectName())
+        ### }
+
+        ### # Return a baseline object:
+        ### if(startsWith(tolower(out[1]), "baseline"){
+        ###     return(project$getBaseline())
+        ### }
+        ### # Return the baseline report object:
+        ### if(startsWith(tolower(out[1]), "report"){
+        ###     return(project$getBaselineReport())
+        ### }
+        ### # Return the project object:
+        ### else if(startsWith(tolower(out[1]), "project"){
+        ###     return(project)
+        ### }
+        ### # Return the project name:
+        ### else if(startsWith(tolower(out[1]), "name"){
+        ###     return(project$getProjectName())
+        ### }
+        ### else{
+        ###     warning("Invalid value of 'out'")
+        ###     return(NULL)
+        ### }
+
+        # Return the requested object:
+        getProject(project, out=out)
 }
 
 #'
@@ -216,7 +707,7 @@ getProjectPaths <- function(projectName=NULL, projectRoot=NULL, recursive=2){
                 else if(length(projectRoot)==0){
                         # The functions J and .jnew and other functions in the rJava library needs initialization:
                         Rstox.init()
-                        projectRoot <- .jnew("no/imr/stox/model/Project")$getRootFolder()
+                        projectRoot <- rJava::.jnew("no/imr/stox/model/Project")$getRootFolder()
                         projectPath <- file.path(projectRoot, projectName)
                         projectDirName <- dirnameRecursive(projectPath, recursive=recursive)
                         if(isTRUE(file.info(projectDirName)$isdir)){

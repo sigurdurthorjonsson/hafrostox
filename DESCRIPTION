@@ -13,8 +13,9 @@ Author: Sigurdur Thor Jonsson [aut, cre],
   Birkir Bardarson [ctb]
 Maintainer: Sigurdur Thor Jonsson <sigurdur@hafro.is>
 Depends: R (>= 3.6),
+    Rstox,
     tidyverse
-Imports: sf, plotKML, XML, dplyr, purrr, magrittr, rjson, geojsonsf, stringr, geo, tibble, tidyr, terra, data.table, ggplot2, rgdal, rgeos, sp
+Imports: sf, plotKML, XML, dplyr, purrr, magrittr, rjson, geojsonsf, stringr, geo, tibble, tidyr, terra, data.table, ggplot2, rgdal, rgeos, sp, methods, ncdf4, pgirmess, rJava
 Suggests: 
     knitr,
     rmarkdown
