@@ -73,26 +73,3 @@ For \code{\link{runBaseline}} theproject name, and for \code{\link{getBaseline}}
 \details{
 The parameters startProcess and endProcess specify the range of processes to run (startProcess : endProcess). If the model has been run already for all or some of the processes in this range, only the unrun processes are run. If there are processes in or prior to this range for which parameters have changed, all processes from the first changed process and throughout the range startProcess : endProcess are rerun. The range of processes to run is extended to any changed processes beyond the range. If reset=TRUE, the range or processes to run is extended to the range startProcess : endProcess regardless of whether the processes have previouslu been run.
 }
-\examples{
-# Get output from the baseline:
-projectName <- "Test_Rstox"
-system.time(baselineData <- getBaseline(projectName))
-# Check the structure of the output from getBaseline():
-ls.str(baselineData)
-
-# The predefined values of the parameters are included as attributes to the list of parameters:
-baselineData$parameters$NASC
-# To get a clean list of all predefined values run the following:
-att <- rapply(baselineData$parameters, attributes, how="replace")
-# The cleaned list has named PROCESSNAME.PARAMETERNAME.predefinedValues:
-unlist(unlist(att, recursive=FALSE), recursive=FALSE)
-
-# Override parameters in the baseline:
-system.time(baselineDataMod <- getBaseline(projectName,
-    AcousticDensity = list(a = -70, m = 10),
-    BioStationWeighting = list(WeightingMethod = "NASC", Radius=100, a = -70, m = 10)))
-
-# Check differences in parameters and data saved by the baseline model:
-all.equal(baselineData, baselineDataMod)
-
-}

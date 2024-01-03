@@ -15,7 +15,7 @@ Maintainer: Sigurdur Thor Jonsson <sigurdur@hafro.is>
 Depends: R (>= 3.6),
     Rstox,
     tidyverse
-Imports: sf, plotKML, XML, dplyr, purrr, magrittr, rjson, geojsonsf, stringr, geo, tibble, tidyr, terra, data.table, ggplot2, rgdal, rgeos, sp, methods, ncdf4, pgirmess, rJava
+Imports: sf, plotKML, XML, dplyr, purrr, magrittr, data.table, rjson, geojsonsf, stringr, geo, tibble, tidyr, terra, ggplot2, rgdal, rgeos, sp, methods, ncdf4, rJava
 Suggests: 
     knitr,
     rmarkdown

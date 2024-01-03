@@ -77,21 +77,4 @@ multipolygon2matrix(x, drop = TRUE, data.frame.out = FALSE)
 \code{matrix2multipolygon} identical to \code{getMultipolygon}. \cr \cr
 \code{multipolygon2matrix} identical to \code{getMatrixList}. \cr \cr
 }
-\examples{
-projectName <- "Test_Rstox"
-g <- getBaseline(projectName, input="proc", proc=NULL, drop=FALSE)
-# Get the stratum polygons:
-multipolygon <- g$processData$stratumpolygon$Polygon
-# Get stratum area in square nautical miles:
-lapply(g$processData$stratumpolygon$Polygon, polyArea)
-# Get cartesian locations using Azimuthal Equidistant projection (preserving distance):
-###proj <- getProjString(multipolygon)
-###xy <- lapply(g$processData$stratumpolygon$Polygon, geo2xy)
-###xlim=range(unlist(lapply(xy, "[", , "x")))
-###ylim=range(unlist(lapply(xy, "[", , "y")))
-###plot(NULL, xlim=xlim, ylim=ylim)
-###lapply(xy, lines, col='black', pbg='white')
-###lapply(xy, polyArea, input="xy")
-
-}
 \keyword{internal}

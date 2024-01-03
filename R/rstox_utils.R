@@ -107,7 +107,7 @@ getProject <- function(projectName, out=c("project", "baseline", "baseline-repor
                 return(NULL)
         }                       
         else{                   
-                return(.jrcall(project, modelTypeJavaFun))
+                return(rJava::.jrcall(project, modelTypeJavaFun))
         }                       
                                 
                         
@@ -154,7 +154,7 @@ Rstox.init <- function() {
         pkgname <- "Rstox";
         loc = dirname(path.package(pkgname))
         # rJava - load jar files in package java directory
-        .jpackage(pkgname, lib.loc=loc)
+        rJava::.jpackage(pkgname, lib.loc=loc)
 }
 
 
@@ -267,28 +267,6 @@ getBaseline <- function(projectName, input=c("par", "proc"), proc="all", drop=TR
 #' When a StoX project has been run using \code{runBaseline} or \code{getBaseline}, the Java object of the project is saved in the project environment, see names(RstoxEnv$Projects). If there are changes made in the project, e.g., replaced files or manual changes in the project.xml file
 #'
 #' @return For \code{\link{runBaseline}} theproject name, and for \code{\link{getBaseline}} a list of three elements named "parameters", "outputData", "processData", where empty elements can be dropped.
-#'
-#' @examples
-#' # Get output from the baseline:
-#' projectName <- "Test_Rstox"
-#' system.time(baselineData <- getBaseline(projectName))
-#' # Check the structure of the output from getBaseline():
-#' ls.str(baselineData)
-#'
-#' # The predefined values of the parameters are included as attributes to the list of parameters:
-#' baselineData$parameters$NASC
-#' # To get a clean list of all predefined values run the following:
-#' att <- rapply(baselineData$parameters, attributes, how="replace")
-#' # The cleaned list has named PROCESSNAME.PARAMETERNAME.predefinedValues:
-#' unlist(unlist(att, recursive=FALSE), recursive=FALSE)
-#'
-#' # Override parameters in the baseline:
-#' system.time(baselineDataMod <- getBaseline(projectName,
-#'     AcousticDensity = list(a = -70, m = 10),
-#'     BioStationWeighting = list(WeightingMethod = "NASC", Radius=100, a = -70, m = 10)))
-#'
-#' # Check differences in parameters and data saved by the baseline model:
-#' all.equal(baselineData, baselineDataMod)
 #'
 #' @export
 #' @rdname runBaseline
@@ -555,10 +533,10 @@ openProject <- function(projectName=NULL, out=c("project", "baseline", "baseline
                 project <- J("no.imr.stox.factory.FactoryUtil")$openProject(projectRoot, projectName)
                 # This line was added on 2017-08-23 due to a bug discovered when estimating the area of polygons using the "accurate" method. When baseline is run, Java calls the function polyArea() when AreaMethod="accurate". However, whenever this failed, the simple method implemented in Java was used (which was a bug). The problem was that the path to the R-bin was not set in Rstox. To solve this, a file holding this path (or the command project$setRFolder(PATH_TO_R_BIN)) will be saved by StoX, and called every time a triggerscript is run. In Rstox we solve the problem by the below sequence:
                 RFolder <- project$getRFolder()
-                #__# RFolder <- .jcall(project, "S", "getRFolder")
+                #__# RFolder <- rJava::.jcall(project, "S", "getRFolder")
                 if(length(RFolder)==0 || (is.character(RFolder) && nchar(RFolder)==0)){
                         project$setRFolder(R.home("bin"))
-                        #__# RFolder <- .jcall(project, "S", "setRFolder", R.home("bin"))
+                        #__# RFolder <- rJava::.jcall(project, "S", "setRFolder", R.home("bin"))
                 }
                 ############################################### ######
 
@@ -634,7 +612,7 @@ getProjectPaths <- function(projectName=NULL, projectRoot=NULL, recursive=2){
         if(length(projectName)==0){
                 # The functions J and .jnew and other functions in the rJava library needs initialization:
                 Rstox.init()
-                out$projectRoot <- .jnew("no/imr/stox/model/Project")$getRootFolder()
+                out$projectRoot <- rJava::.jnew("no/imr/stox/model/Project")$getRootFolder()
                 return(out)
         }
         ####################################

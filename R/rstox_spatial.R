@@ -21,22 +21,6 @@
 #' 
 #' @return \code{polyArea} returns area in nmi squared, and \code{matrix2multipolygon} returns a MULTIPOLYGON wkt.
 #'
-#' @examples
-#' projectName <- "Test_Rstox"
-#' g <- getBaseline(projectName, input="proc", proc=NULL, drop=FALSE)
-#' # Get the stratum polygons:
-#' multipolygon <- g$processData$stratumpolygon$Polygon
-#' # Get stratum area in square nautical miles:
-#' lapply(g$processData$stratumpolygon$Polygon, polyArea)
-#' # Get cartesian locations using Azimuthal Equidistant projection (preserving distance):
-#' ###proj <- getProjString(multipolygon)
-#' ###xy <- lapply(g$processData$stratumpolygon$Polygon, geo2xy)
-#' ###xlim=range(unlist(lapply(xy, "[", , "x")))
-#' ###ylim=range(unlist(lapply(xy, "[", , "y")))
-#' ###plot(NULL, xlim=xlim, ylim=ylim)
-#' ###lapply(xy, lines, col='black', pbg='white')
-#' ###lapply(xy, polyArea, input="xy")
-#' 
 #' @export
 #' @importFrom rgeos readWKT
 #' @rdname polyArea
@@ -397,7 +381,6 @@ matrixList2multipolygon <- function(x, requireClosed=TRUE){
 	x <- lapply(x, addParantheseis)
 	x <- addParantheseis(x)
 	x <- paste0("MULTIPOLYGON", x)
-	write(x, "test.txt")
 	
 	### if(isConnected){
 	### 	x <- lapply(x, addParantheseis)
@@ -1890,26 +1873,8 @@ readStrataPolygons <- function(projectName, ...){
 		list(lonlat=lonlat, lonlatAll=lonlatAll, strataNames=strataNames)
 	}
 	
-	# If the 'projectName' is a project, get the strata from getBaseline():
-	if(all(isProject(projectName))){
-		# Get the baseline output and number of strata:
-		g <- getBaseline(projectName, endProcess="ReadProcessData", input="proc", proc=NULL, drop=FALSE)
-		strataNames <- g$processData$stratumpolygon$Stratum
-	
-		# Get the strata polygons in geographic coordinates (longitude, latitude) in a list named with the strata names:
-		lonlat <- lapply(g$processData$stratumpolygon$Polygon, getMatrixList, data.frame.out=TRUE)
-		names(lonlat) <- strataNames
-		lonlat <- lapply(lonlat, "colnames<-", c("longitude", "latitude"))
-		# Test of southern hemisphere:
-		#lonlat <- lapply(lonlat, function(x) {x$latitude <- -x$latitude; x})
-	
-		# Create a single data frame version of the strata polygons, with stratum as the third column, and get a common projection definition using the centroid of the system:
-		lonlatAll <- as.data.frame(data.table::rbindlist(lonlat, idcol="stratum"))
-		
-		out <- list(lonlat=lonlat, lonlatAll=lonlatAll, strataNames=strataNames)
-	}
 	# Read the strata from shapefiles, a WKT file ot WKT string:
-	else if(is.character(projectName)){
+	if(is.character(projectName)){
 		if(all(file.exists(projectName))){
 			# Assure that the 'projectName' is a vector of files and not a directory, for convenience:
 			if(length(projectName) == 1 && isTRUE(file.info(projectName)$isdir)){
@@ -2220,38 +2185,6 @@ writeTransectsTRACK <- function(x, projectName, dir=NULL, digits=5, prefix="", s
 	names(x$Transect) <- filenames
 	# Write the files:
 	lapply(seq_along(x$Transect), writeTransectsTRACK_OneStratum, x=x, ...)
-	
-	# Return the file names
-	filenames
-}
-#'
-#' @export
-#' @importFrom data.table fwrite
-#' @rdname writeTransects
-#' 
-writeTransectsGPX <- function(x, projectName, dir=NULL, digits=5, prefix="", suffix="", filenames=NULL){
-	# Function for writing one stratum:
-	writeTransectsGPX__OneStratum <- function(stratumInd, x){
-		# Extract the file name from the names of the input:
-		filename <- names(x$Transect)[stratumInd]
-		
-		# Select the current stratum:
-		Transect <- x$Transect[[stratumInd]]
-		
-		out <- data.frame(wp=seq_len(nrow(Transect)), Long=round(Transect$lon_start, digits=digits), Lat=round(Transect$lat_start, digits=digits))
-		# Use the suggested pgirmess package:
-		pgirmess::writeGPX(out, file=filename)
-	}
-
-	# Split into strata, and set the files names as names of the list:
-	if(length(filenames)==0){
-		filenames <- getTransectFileName(x=x, projectName=projectName, prefix=prefix, suffix=suffix, ext="gpx", dir=dir, byStratum=TRUE)
-	}
-	
-	x$Transect <- split(x$Transect, x$Transect$stratum)
-	names(x$Transect) <- filenames
-	# Write the files:
-	lapply(seq_along(x$Transect), writeTransectsGPX__OneStratum, x=x)
 	
 	# Return the file names
 	filenames
