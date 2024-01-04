@@ -1683,6 +1683,7 @@ subsetStrata <- function(strata, lonlat){
 }
 #' 
 #' @export
+#' @import tidyverse
 #' @import ggplot2
 #' @rdname surveyPlanner
 #' 

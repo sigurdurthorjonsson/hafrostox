@@ -1,3 +1,6 @@
+#' Checks if 'projectname' is an RStoX project.
+#'
+#' Checks if 'projectname' is an RStoX project.
 #'
 #' @export
 #'
@@ -53,9 +56,11 @@ isProject <- function(projectName, subset.out=FALSE){
         hasStoX_data_sources(projectName, subset.out=subset.out)
 }
 
+#' Get StoX project.
 #' 
+#' Get StoX project.
+#'
 #' @export
-#' @rdname createProject        
 #'
 getProject <- function(projectName, out=c("project", "baseline", "baseline-report", "name"), msg=FALSE){
         # Return immediately if a project or baseline object is given:
@@ -140,6 +145,7 @@ getProject <- function(projectName, out=c("project", "baseline", "baseline-repor
 #'
 #' This funcion initializes the connection to Java.
 #'
+#' @import Rstox
 #' @import grDevices
 #' @import graphics
 #' @import stats
@@ -158,7 +164,9 @@ Rstox.init <- function() {
 }
 
 
-
+#' Get RStox baselin
+#'
+#' Get RStox baselin
 #'
 #' @export
 #'
@@ -464,10 +472,12 @@ runBaseline <- function(projectName, out=c("project", "baseline", "baseline-repo
         #}
 }
 
+#' Open StoX project.
 #' 
+#' Open StoX project.
+#'
 #' @importFrom rJava J
 #' @export
-#' @rdname createProject        
 #'
 openProject <- function(projectName=NULL, out=c("project", "baseline", "baseline-report", "name"), msg=FALSE){
         # Old version, listing everything in the default workspace:
@@ -597,6 +607,9 @@ openProject <- function(projectName=NULL, out=c("project", "baseline", "baseline
         getProject(project, out=out)
 }
 
+#' Get StoX project paths.
+#'
+#' Get StoX project paths.
 #'
 #' @export
 #'
@@ -717,6 +730,9 @@ getProjectPaths <- function(projectName=NULL, projectRoot=NULL, recursive=2){
         return(list(projectName=projectName, projectRoot=projectRoot, projectPath=projectPath, RDataDir=RDataDir, RReportDir=RReportDir, projectXML=projectXML, inputDir=inputDir, outputDir=outputDir))
 }
 
+#' List open StoX projects.
+#'
+#' List open StoX projects.
 #'
 #' @export
 #'
@@ -728,6 +744,9 @@ listOpenProjects <- function(){
         out
 }
 
+#' Get StoX R-environment.
+#'
+#' Get StoX R-environment.
 #'
 #' @export
 #' @keywords internal
@@ -740,6 +759,9 @@ getRstoxEnv <- function(){
         RstoxEnv
 }
 
+#' Initiate StoX R environment.
+#'
+#' Initiate StoX R environment.
 #'
 #' @export
 #' @keywords internal
@@ -1011,6 +1033,9 @@ initiateRstoxEnv <- function(){
         return(Definitions)
 }
 
+#' Run StoX bootstrap.
+#'
+#' Run StoX bootstrap.
 #'
 #' @export
 #'
@@ -1045,6 +1070,9 @@ runBootstrap <- function(projectName, bootstrapMethod="AcousticTrawl", acousticM
         runBaseline(projectName, parlist=parameters, out="name", reset=TRUE, msg=FALSE)
 }
 
+#' Run StoX bootstrap, version 1.6.
+#'
+#' Run StoX bootstrap, version 1.6.
 #'
 #' @export
 #'
@@ -1055,6 +1083,9 @@ runBootstrap_1.6 <- function(projectName, bootstrapMethod="AcousticTrawl", acous
         setPrecisionLevel(projectName, g)
 }
 
+#' Impute by age.
+#'
+#' Impute by age.
 #'
 #' @export
 #'
@@ -1177,6 +1208,9 @@ imputeByAge <- function(projectName, seed=1, cores=1, saveInd=TRUE, ...){
         return(imputeSummary.out)
 }
 
+#' Save StoX project data.
+#'
+#' Save StoX project data.
 #'
 #' @export
 #'
@@ -1216,6 +1250,9 @@ saveProjectData <- function(projectName, var="all", ...){
         invisible(files)
 }
 
+#' Get StoX reports.
+#'
+#' Get StoX reports.
 #'
 #' @export
 #'
@@ -1223,6 +1260,14 @@ getReports <- function(projectName, out="all", options="", ...){
         runFunsRstox(projectName, string="report", out=out, options=options, write=TRUE, all.out=TRUE, ...)
 }
 
+#' Get StoX plots
+#'
+#' Get StoX plots
+#'
+#' @param projectName Stox project name.
+#' @param out Stox output container.
+#' @param options Stox options
+#' @param ... Any other params to be passed on.
 #'
 #' @export
 #'
@@ -1230,6 +1275,9 @@ getPlots <- function(projectName, out="all", options="", ...){
         runFunsRstox(projectName, string="plot", out=out, options=options, ...)
 }
 
+#' Set single seed.
+#'
+#' Set single seed.
 #'
 #' @export
 #' @keywords internal
@@ -1238,6 +1286,9 @@ setSeedSingle <- function(seed){
         set.seed(if(isTRUE(seed)) 1234 else if(is.numeric(seed)) seed else NULL) # seed==TRUE giving 1234 for compatibility with older versions
 }
 
+#' Gets vector of fixed seeds for a given seed
+#'
+#' Gets vector of fixed seeds for a given seed
 #'
 #' @export
 #' @keywords internal
@@ -1248,6 +1299,9 @@ getSeedV <- function(seed, nboot){
         SeedV
 }
 
+#' Get 10 million to sample from.
+#'
+#' Get 10 million to sample from.
 #'
 #' @export
 #' @keywords internal
@@ -1257,6 +1311,9 @@ getSequenceToSampleFrom <- function(){
         seq_len(size)
 }
 
+#' Get log of Stox ID.
+#'
+#' Get log of Stox ID.
 #'
 #' @export
 #' @keywords internal
@@ -1268,6 +1325,9 @@ getLogStoXid <- function(Log, timevar="start_time"){
         Log
 }
 
+#' Get StoX process data table as dataframe.
+#' 
+#' Get StoX process data table as dataframe.
 #' 
 #' @export
 #' @keywords internal
